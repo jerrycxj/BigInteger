@@ -84,5 +84,5 @@ BigInteger BigInteger::fact() const {
 
 void BigInteger::setToZero() {
 	unsigned long long index = size;
-	while(index--) digits[index] = 0;
+	while(index) digits[--index] = 0;
 }
