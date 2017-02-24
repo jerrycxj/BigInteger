@@ -2,8 +2,6 @@
 #include <fstream>
 #include "BigInteger.hpp"
 
-using namespace std;
-
 void BigInteger::hexPrint() const {
 	unsigned long long mask = 0xF;
 	unsigned long long index = this->size;
@@ -18,10 +16,10 @@ void BigInteger::hexPrint() const {
 			temp >>= i - 4;
 			temp += 48;
 			if(temp > 57) temp += 7;
-			cout << (char)(temp);
+			std::cout << (char)(temp);
 			mask >>= 4;
 		}
-		cout << " ";
+		std::cout << " ";
 	}
 }
 
@@ -30,15 +28,15 @@ void BigInteger::binPrint() const {
 	while(--index && digits[index] == 0) { }
 	++index;
 	while(index--) {
-		cout << binDigit(index);
-		cout << " ";
+		std::cout << binDigit(index);
+		std::cout << " ";
 	}
 }
 
-string BigInteger::binDigit(unsigned long long digit) const {
+std::string BigInteger::binDigit(unsigned long long digit) const {
 	if(digit < 0 || digit >= size)
 		return "invalid index in binDigit(unsigned long long)";
-	string retString = "";
+	std::string retString = "";
 	unsigned long long testDigit = 0b1;
 	testDigit <<= 63;
 	while(testDigit) {
@@ -48,12 +46,12 @@ string BigInteger::binDigit(unsigned long long digit) const {
 	return retString;
 }
 
-void BigInteger::binDump(string filename) const {
+void BigInteger::binDump(std::string filename) const {
 	char* name = new char[filename.length() + 1];
 	for(unsigned int i = 0;i < filename.length();++i)
 		name[i] = filename[i];
 	name[filename.length()] = '\0';
-	ofstream file;
+	std::ofstream file;
 	file.open(name);
 	unsigned long long charMask = 0;
 	unsigned long long index = this->size;

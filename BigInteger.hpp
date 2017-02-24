@@ -1,6 +1,5 @@
-#include <iostream>
+//#include <iostream>
 #include <string>
-using namespace std;
 
 class BigInteger {
 
@@ -38,9 +37,9 @@ class BigInteger {
 	// prints, starting at the first non-zero digit, the number in binary
 	void binPrint() const;
 	// retrieves, in string form, digits at index 'digit'
-	string binDigit(unsigned long long digit) const;
+	std::string binDigit(unsigned long long digit) const;
 	// prints actual binary of number to file 'filename'
-	void binDump(string filename) const;
+	void binDump(std::string filename) const;
 
 	// Math Functions //
 
@@ -99,8 +98,6 @@ class BigInteger {
 	bool operator>=(const BigInteger& rhs) const;
 	bool operator>(const BigInteger& rhs) const;
 
-	//friend ostream& operator<<(ostream& os, const BigInteger& number);
-
 	// Flags //
 
 	// Zero
@@ -111,10 +108,3 @@ class BigInteger {
 	bool O() const;
 
 };
-/*
-ostream& operator<<(ostream& os, const BigInteger& number) {
-	number.binPrint();
-	return os;
-	
-}
-*/

@@ -2,7 +2,7 @@
 
 BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
-		cout << "+: unequal sizes\n";
+		//std::cout << "+: unequal sizes\n";
 		return *this;
 	}
 
@@ -30,7 +30,7 @@ BigInteger BigInteger::operator+(const BigInteger& rhs) const {
 }
 BigInteger& BigInteger::operator-=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
-		cout << "-: unequal sizes\n";
+		//std::cout << "-: unequal sizes\n";
 		return *this;
 	}
 	*this += -rhs;
@@ -43,12 +43,12 @@ BigInteger BigInteger::operator-(const BigInteger& rhs) const {
 }
 BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
-		cout << "*: unequal sizes\n";
+		//std::cout << "*: unequal sizes\n";
 		return *this;
 	}
 
 	if(this->size > (full >> 1)) {
-		cout << "*: numbers too big\n";
+		//std::cout << "*: numbers too big\n";
 		return *this;
 	}
 
@@ -85,19 +85,19 @@ BigInteger BigInteger::operator*(const BigInteger& rhs) const {
 }
 BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
-		cout << "/: unequal sizes\n";
+		//std::cout << "/: unequal sizes\n";
 		return *this;
 	}
 
 	if(this->size > (full >> 1)) {
-		cout << "/: numbers too big\n";
+		//std::cout << "/: numbers too big\n";
 		return *this;
 	}
 
 	// if either number is zero, return zero
 
 	if(rhs.Z()) {
-		cout << "/: division by zero\n";
+		//std::cout << "/: division by zero\n";
 		*this = BigInteger(this->size);
 		return *this;
 	}
@@ -180,7 +180,7 @@ BigInteger BigInteger::operator/(const BigInteger& rhs) const {
 }
 BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
-		cout << "%: unequal sizes\n";
+		//std::cout << "%: unequal sizes\n";
 		return *this;
 	}
 

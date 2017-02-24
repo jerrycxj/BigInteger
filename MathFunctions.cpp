@@ -10,7 +10,7 @@ BigInteger BigInteger::abs() const {
 BigInteger BigInteger::sqrt() const {
 	if(this->Z()) return *this;
 	if(this->N()) {
-		cout << "sqrt: negative radicand\n";
+		//std::cout << "sqrt: negative radicand\n";
 		return *this;
 	}
 
@@ -42,7 +42,7 @@ BigInteger BigInteger::pow(const BigInteger& exp) const {
 	bool thisZ = this->Z();
 	bool expZ = this->Z();
 	if(thisZ & expZ) {
-		cout << "pow: 0 ^ 0\n";
+		//std::cout << "pow: 0 ^ 0\n";
 		return acc;
 	}
 

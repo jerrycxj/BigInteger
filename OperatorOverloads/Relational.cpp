@@ -2,7 +2,7 @@
 
 bool BigInteger::operator==(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << "==: unequal sizes\n";
+		//std::cout << "==: unequal sizes\n";
 		return false;
 	}
 	for(unsigned long long index = 0;index < this->size;++index) {
@@ -15,7 +15,7 @@ bool BigInteger::operator==(const BigInteger& rhs) const {
 
 bool BigInteger::operator!=(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << "!=: unequal sizes\n";
+		//std::cout << "!=: unequal sizes\n";
 		return false;
 	}
 	return !(*this == rhs);
@@ -23,7 +23,7 @@ bool BigInteger::operator!=(const BigInteger& rhs) const {
 
 bool BigInteger::operator<=(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << "<=: unequal sizes\n";
+		//std::cout << "<=: unequal sizes\n";
 		return false;
 	}
 	return !(*this > rhs);
@@ -31,7 +31,7 @@ bool BigInteger::operator<=(const BigInteger& rhs) const {
 
 bool BigInteger::operator<(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << "<: unequal sizes\n";
+		//std::cout << "<: unequal sizes\n";
 		return false;
 	}
 
@@ -48,7 +48,7 @@ bool BigInteger::operator<(const BigInteger& rhs) const {
 
 bool BigInteger::operator>=(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << ">=: unequal sizes\n";
+		//std::cout << ">=: unequal sizes\n";
 		return false;
 	}
 	return !(*this < rhs);
@@ -56,7 +56,7 @@ bool BigInteger::operator>=(const BigInteger& rhs) const {
 
 bool BigInteger::operator>(const BigInteger& rhs) const {
 	if(this->size != rhs.size) {
-		cout << ">: unequal sizes\n";
+		//std::cout << ">: unequal sizes\n";
 		return false;
 	}
 
