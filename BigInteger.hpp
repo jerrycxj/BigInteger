@@ -49,6 +49,8 @@ class BigInteger {
 	BigInteger sqrt() const;
 	// Power: this ^ exp
 	BigInteger pow(const BigInteger& exp) const;
+	// Factorialize
+	BigInteger fact() const;
 
 	/*** Operator Overloads ***/
 

@@ -1,8 +1,5 @@
-#include <iostream>
-
 #include "BigInteger.hpp"
 
-using namespace std;
 BigInteger BigInteger::abs() const {
 	return (N() ? -(*this) : *this);
 }
@@ -64,4 +61,22 @@ BigInteger BigInteger::pow(const BigInteger& exp) const {
 		--expCopy;
 	}
 	return acc;
+}
+
+BigInteger BigInteger::fact() const {
+	BigInteger ret = BigInteger(1,this->size);
+	if(this->N()) {
+		//std::cout << "fact: negative number\n";
+		return ret;
+	}
+	if(this->Z() || *this == ret) return ret;
+
+	BigInteger copy = BigInteger(*this);
+
+	do {
+		ret *= copy;
+		--copy;
+	}while(!copy.Z());
+
+	return ret;
 }
