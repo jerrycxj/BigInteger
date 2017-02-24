@@ -47,6 +47,12 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 		return *this;
 	}
 
+	if(this->Z()) return *this;
+	if(rhs.Z()) {
+		this->setToZero();
+		return *this;
+	}
+
 	if(this->size > (full >> 1)) {
 		//std::cout << "*: numbers too big\n";
 		return *this;
@@ -98,13 +104,23 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 
 	if(rhs.Z()) {
 		//std::cout << "/: division by zero\n";
-		*this = BigInteger(this->size);
+		this->setToZero();
 		return *this;
 	}
-	if(this->Z()) {
-		*this = BigInteger(this->size);
-		return *this;
+	if(this->Z()) return *this;
+
+	if(*this <= rhs) {
+		if(*this < rhs) {
+			this->setToZero();
+			return *this;
+		}
+		if(*this == rhs) {
+			this->setToZero();
+			this->digits[0] = 1;
+			return *this;
+		}
 	}
+
 
 	unsigned long long doubleThisSize = this->size << 1;
 
@@ -137,15 +153,6 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 	for(unsigned char i = 64;i;--i)
 		SORS <<= this->size;
 
-	if(DEND < SOR) {
-		*this = BigInteger(this->size);
-		return *this;
-	}
-	if(DEND == SOR) {
-		*this = BigInteger(1, this->size);
-		return *this;
-	}
-
 	BigInteger one = BigInteger(1,doubleThisSize);
 
 	for(unsigned long long i = this->size;i;--i) {
@@ -164,7 +171,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 
 	DEND = QUO;
 	DEND *= SOR;
-	if(DEND != OGDEND) ++QUO;
+	if(DEND > OGDEND) ++QUO;
 	if(negAns) QUO = -QUO;
 
 	for(unsigned long long i = 0;i < this->size;++i)
@@ -186,12 +193,13 @@ BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 
 	// obvious cases
 
-	if(*this < rhs)
-		return *this;
-
-	if(*this == rhs) {
-		*this = BigInteger(this->size);
-		return *this;
+	if(*this <= rhs) {
+		if(*this < rhs)
+			return *this;
+		if(*this == rhs) {
+			this->setToZero();
+			return *this;
+		}
 	}
 
 	// slow mod

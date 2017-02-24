@@ -51,6 +51,8 @@ class BigInteger {
 	BigInteger pow(const BigInteger& exp) const;
 	// Factorialize
 	BigInteger fact() const;
+	// Set to zero
+	void setToZero();
 
 	/*** Operator Overloads ***/
 

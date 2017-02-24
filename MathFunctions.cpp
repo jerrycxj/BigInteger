@@ -80,3 +80,9 @@ BigInteger BigInteger::fact() const {
 
 	return ret;
 }
+
+
+void BigInteger::setToZero() {
+	unsigned long long index = size;
+	while(index--) digits[index] = 0;
+}
