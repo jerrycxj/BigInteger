@@ -1,6 +1,14 @@
 //#include <iostream>
 #include <string>
 
+/*
+Author:
+Steven Borisko
+
+Description:
+Class for arbitrarily large number arithmetic
+*/
+
 class BigInteger {
 
 	private:
@@ -24,7 +32,7 @@ class BigInteger {
 
 	// creates a number of 'newSize' digits set to zero
 	BigInteger(unsigned long long newSize);
-	// creates a number of 'newSize' digits set to initNum
+	// creates a number of 'newSize' digits set to 'initNum'
 	BigInteger(unsigned long long initNum, unsigned long long newSize);
 	// deep copy of rhs
 	BigInteger(const BigInteger& rhs);
