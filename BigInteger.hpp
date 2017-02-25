@@ -66,6 +66,14 @@ class BigInteger {
 	void zero();
 	// Set to a random number
 	void rand();
+	// Resizes the number to 'newSize' digits
+	// if digits < size
+		// the most significant digits will be cut off
+		// the least significant digits will remain in the resized number
+	// if digits > size
+		// the whole number will remain in the resized number
+		// the new, most significant digits will be willed in with zeroes
+	void resize(unsigned long long newSize);
 
 	/*** Operator Overloads ***/
 

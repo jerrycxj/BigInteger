@@ -15,7 +15,9 @@ BigInteger::BigInteger(unsigned long long newSize) :
 BigInteger::BigInteger(
 
 	unsigned long long initNum,
-	unsigned long long newSize) :
+	unsigned long long newSize
+
+	) :
 
 	size(newSize),
 	digits(new unsigned long long[newSize])

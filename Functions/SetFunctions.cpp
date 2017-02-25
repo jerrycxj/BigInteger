@@ -18,3 +18,19 @@ void BigInteger::rand() {
 		digits[index] += std::rand();
 	}
 }
+
+void BigInteger::resize(unsigned long long newSize) {
+	if(newSize == size) return;
+	unsigned long long* newArray = new unsigned long long[newSize];
+	unsigned long long index = 0;
+	while((index < newSize) & (index < size)) {
+		newArray[index] = digits[index];
+		++index;
+	}
+	--index;
+	while(++index < newSize)
+		newArray[index] = 0;
+	delete[] digits;
+	digits = newArray;
+	size = newSize;
+}
