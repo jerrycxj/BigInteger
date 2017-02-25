@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "BigInteger.hpp"
+
+#include "../BigInteger.hpp"
 
 void BigInteger::hexPrint() const {
 	unsigned long long mask = 0xF;

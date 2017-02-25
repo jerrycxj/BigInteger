@@ -51,8 +51,13 @@ class BigInteger {
 	BigInteger pow(const BigInteger& exp) const;
 	// Factorialize
 	BigInteger fact() const;
+
+	// SetFunctions //
+
 	// Set to zero
-	void setToZero();
+	void zero();
+	// Set to a random number
+	void rand();
 
 	/*** Operator Overloads ***/
 

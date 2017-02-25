@@ -1,4 +1,4 @@
-#include "BigInteger.hpp"
+#include "../BigInteger.hpp"
 
 BigInteger BigInteger::abs() const {
 	return (N() ? -(*this) : *this);
@@ -79,10 +79,4 @@ BigInteger BigInteger::fact() const {
 	}while(!copy.Z());
 
 	return ret;
-}
-
-
-void BigInteger::setToZero() {
-	unsigned long long index = size;
-	while(index) digits[--index] = 0;
 }

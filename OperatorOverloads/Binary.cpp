@@ -49,7 +49,7 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 
 	if(this->Z()) return *this;
 	if(rhs.Z()) {
-		this->setToZero();
+		this->zero();
 		return *this;
 	}
 
@@ -104,18 +104,18 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 
 	if(rhs.Z()) {
 		//std::cout << "/: division by zero\n";
-		this->setToZero();
+		this->zero();
 		return *this;
 	}
 	if(this->Z()) return *this;
 
 	if(*this <= rhs) {
 		if(*this < rhs) {
-			this->setToZero();
+			this->zero();
 			return *this;
 		}
 		if(*this == rhs) {
-			this->setToZero();
+			this->zero();
 			this->digits[0] = 1;
 			return *this;
 		}
@@ -197,7 +197,7 @@ BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 		if(*this < rhs)
 			return *this;
 		if(*this == rhs) {
-			this->setToZero();
+			this->zero();
 			return *this;
 		}
 	}

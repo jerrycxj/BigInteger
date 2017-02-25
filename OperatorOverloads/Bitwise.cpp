@@ -65,7 +65,7 @@ BigInteger& BigInteger::operator<<=(unsigned long long shift) {
 	// if shift > 64
 	if(completeShifts) {
 		if(completeShifts >= this->size) {
-			this->setToZero();
+			this->zero();
 			return *this;
 		}
 		else {
@@ -121,7 +121,7 @@ BigInteger& BigInteger::operator>>=(unsigned long long shift) {
 	// if shift > 64
 	if(completeShifts) {
 		if(completeShifts >= this->size) {
-			this->setToZero();
+			this->zero();
 			return *this;
 		}
 		else {
