@@ -71,6 +71,8 @@ class BigInteger {
 
 	// Assignment: deep copy //
 	BigInteger& operator=(const BigInteger& rhs);
+	unsigned long long operator[](const unsigned long long& index) const;
+	unsigned long long& operator[](const unsigned long long& index);
 
 	// Binary //
 	BigInteger& operator+=(const BigInteger& rhs);
