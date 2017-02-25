@@ -35,7 +35,7 @@ void BigInteger::binPrint() const {
 }
 
 std::string BigInteger::binDigit(unsigned long long digit) const {
-	if(digit < 0 || digit >= size)
+	if(digit >= size)
 		return "invalid index in binDigit(unsigned long long)";
 	std::string retString = "";
 	unsigned long long testDigit = 0b1;
