@@ -4,4 +4,4 @@ As of now, there is no function to convert it to decimal, so all printing
   is done in binary or hexadecimal.
 
 GNU command for compiling:
-`g++ -std=c++11 *.cpp OperatorOverloads/*.cpp Functions/*.cpp`
+`g++ -O3 -std=c++11 *.cpp OperatorOverloads/*.cpp Functions/*.cpp`
