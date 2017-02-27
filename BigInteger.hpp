@@ -1,5 +1,5 @@
 #include <string>
-#include "DynamicDecimal.hpp"
+#include "DynamicDecimal/DynamicDecimal.hpp"
 //#include <iostream>
 
 /*
