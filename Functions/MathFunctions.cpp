@@ -22,7 +22,7 @@ BigInteger BigInteger::sqrt() const {
 	if(ret.Z()) ret = one + one;
 
 	for(unsigned long long i = this->size;i;--i) {
-		for(unsigned char j = 8;j;--j) {
+		for(unsigned char j = 128;j;--j) {
 			ret += *this / ret;
 			ret >>= 1;
 		}
