@@ -6,6 +6,11 @@ BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
 		return *this;
 	}
 
+	if(this == &rhs) {
+		*this = (*this + rhs);
+		return *this;
+	}
+
 	unsigned long long index = 0;
 	unsigned long long overflow = 0;
 	unsigned long long originalDigit = 0;
@@ -44,6 +49,11 @@ BigInteger BigInteger::operator-(const BigInteger& rhs) const {
 BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "*: unequal sizes\n";
+		return *this;
+	}
+
+	if(this == &rhs) {
+		*this = (*this * rhs);
 		return *this;
 	}
 
@@ -92,6 +102,11 @@ BigInteger BigInteger::operator*(const BigInteger& rhs) const {
 BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "/: unequal sizes\n";
+		return *this;
+	}
+
+	if(this == &rhs) {
+		*this = (*this / rhs);
 		return *this;
 	}
 
@@ -188,6 +203,11 @@ BigInteger BigInteger::operator/(const BigInteger& rhs) const {
 BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "%: unequal sizes\n";
+		return *this;
+	}
+
+	if(this == &rhs) {
+		*this = (*this % rhs);
 		return *this;
 	}
 
