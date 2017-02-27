@@ -12,10 +12,14 @@ void BigInteger::rand() {
 	std::srand(std::time(0));
 	unsigned long long index = size;
 	unsigned long long shifted = 0;
+	unsigned long long temp = 0;
 	while(index) {
+		temp = (unsigned long long) std::rand() << 32;
+		temp += std::rand();
 		shifted = (unsigned long long)std::rand() << 32;
 		digits[--index] = shifted;
 		digits[index] += std::rand();
+		digits[index] += temp;
 	}
 }
 

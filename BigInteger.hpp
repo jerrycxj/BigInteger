@@ -1,5 +1,6 @@
-//#include <iostream>
 #include <string>
+#include "DynamicDecimal.hpp"
+//#include <iostream>
 
 /*
 Author:
@@ -45,9 +46,11 @@ class BigInteger {
 	// prints, starting at the first non-zero digit, the number in binary
 	void binPrint() const;
 	// retrieves, in string form, digits at index 'digit'
-	std::string binDigit(unsigned long long digit) const;
+	std::string binDigit(const unsigned long long digit) const;
 	// prints actual binary of number to file 'filename'
-	void binDump(std::string filename) const;
+	void binDump(const std::string filename) const;
+	// prints entire number in decimal
+	void decPrint() const;
 
 	// Math Functions //
 

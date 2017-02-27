@@ -34,7 +34,7 @@ void BigInteger::binPrint() const {
 	}
 }
 
-std::string BigInteger::binDigit(unsigned long long digit) const {
+std::string BigInteger::binDigit(const unsigned long long digit) const {
 	if(digit >= size)
 		return "invalid index in binDigit(unsigned long long)";
 	std::string retString = "";
@@ -47,11 +47,8 @@ std::string BigInteger::binDigit(unsigned long long digit) const {
 	return retString;
 }
 
-void BigInteger::binDump(std::string filename) const {
-	char* name = new char[filename.length() + 1];
-	for(unsigned int i = 0;i < filename.length();++i)
-		name[i] = filename[i];
-	name[filename.length()] = '\0';
+void BigInteger::binDump(const std::string filename) const {
+	const char* name = filename.c_str();
 	std::ofstream file;
 	file.open(name);
 	unsigned long long charMask = 0;
@@ -71,5 +68,24 @@ void BigInteger::binDump(std::string filename) const {
 		}
 	}
 	file.close();
-	delete[] name;
+}
+
+void BigInteger::decPrint() const {
+	BigInteger thisCopy = this->abs();
+	thisCopy <<= 1;
+	DynamicDecimal acc = DynamicDecimal(0);
+	for(unsigned long long i = this->size - 1;i;--i) {
+		for(unsigned char j = 64;j;--j) {
+			acc.multiplyByTwo();
+			if(thisCopy.N()) acc.addOne();
+			thisCopy <<= 1;
+		}
+	}
+	for(unsigned char j = 63;j;--j) {
+		acc.multiplyByTwo();
+		if(thisCopy.N()) acc.addOne();
+		thisCopy <<= 1;
+	}
+	if(this->N()) std::cout << "-";
+	acc.print();
 }
