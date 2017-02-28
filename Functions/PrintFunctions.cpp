@@ -71,21 +71,28 @@ void BigInteger::binDump(const std::string filename) const {
 }
 
 void BigInteger::decPrint() const {
-	BigInteger thisCopy = this->abs();
-	thisCopy <<= 1;
 	DynamicDecimal acc = DynamicDecimal(0);
-	for(unsigned long long i = this->size - 1;i;--i) {
-		for(unsigned char j = 64;j;--j) {
+	unsigned long long mask = left;
+	unsigned long long index = this->size - 1;
+	unsigned long long currDigit = this->digits[index];
+
+	mask >>= 1;
+	while(mask) {
+		acc.multiplyByTwo();
+		if(mask & currDigit) acc.addOne();
+		mask >>= 1;
+	}
+
+	while(index--) {
+		currDigit = this->digits[index];
+		mask = left;
+		while(mask) {
 			acc.multiplyByTwo();
-			if(thisCopy.N()) acc.addOne();
-			thisCopy <<= 1;
+			if(mask & currDigit) acc.addOne();
+			mask >>= 1;
 		}
 	}
-	for(unsigned char j = 63;j;--j) {
-		acc.multiplyByTwo();
-		if(thisCopy.N()) acc.addOne();
-		thisCopy <<= 1;
-	}
+
 	if(this->N()) std::cout << "-";
 	acc.print();
 }
