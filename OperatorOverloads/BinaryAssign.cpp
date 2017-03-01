@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../BigInteger.hpp"
 
 BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
@@ -60,23 +61,22 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 		return *this;
 	}
 
-	BigInteger acc = BigInteger(this->size * 2);
-	BigInteger adder = BigInteger(this->size * 2);
-	BigInteger rhsCopy = BigInteger(rhs);
-	BigInteger one = BigInteger(1,this->size);
-	BigInteger temp = BigInteger(this->size);
+	const unsigned long long doubleSize = (this->size << 1);
 
-	// copy rhs into the left half of rhsCopy
-	for(unsigned long long i = 0; i < this->size;++i)
-		adder.digits[i + this->size] = this->digits[i];
+	BigInteger acc = BigInteger(doubleSize);
+
+	unsigned long long i = this->size;
+	while(i--) acc.digits[i] = rhs.digits[i];
+
+
+	BigInteger adder = BigInteger(doubleSize);
+	i = this->size;
+	while(i--) adder.digits[i + this->size] = this->digits[i];
 
 	for(unsigned long long i = this->size;i;--i) {
-		for(unsigned char j = 64;j;--j) {
-			temp = rhsCopy;
-			temp &= one;
-			if(!temp.Z()) acc += adder;
+		for(unsigned long long j = 64;j;--j) {
+			if(acc.digits[0] & 1) acc += adder;
 			acc >>= 1;
-			rhsCopy >>= 1;
 		}
 	}
 
