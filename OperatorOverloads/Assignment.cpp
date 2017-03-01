@@ -11,6 +11,12 @@ BigInteger& BigInteger::operator=(const BigInteger& rhs) {
 	return *this;
 }
 
+BigInteger& BigInteger::operator=(const unsigned long long& rhs) {
+	this->zero();
+	this->digits[0] = rhs;
+	return *this;
+}
+
 unsigned long long BigInteger::operator[](const unsigned long long& index) const {
 	return digits[index];
 }

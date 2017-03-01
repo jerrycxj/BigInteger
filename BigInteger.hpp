@@ -1,6 +1,7 @@
 #include <string>
-#include "DynamicDecimal/DynamicDecimal.hpp"
 //#include <iostream>
+
+#include "DynamicDecimal/DynamicDecimal.hpp"
 
 /*
 Author:
@@ -22,10 +23,18 @@ class BigInteger {
 	const unsigned long long full = 0b1111111111111111111111111111111111111111111111111111111111111111;
 	// 1 at 64th (index 63) (leftmost) bit
 	const unsigned long long left = 0b1000000000000000000000000000000000000000000000000000000000000000;
+
+	// data
+
 	// number of digits in the number
 	unsigned long long size;
 	// array of digits in the number
 	unsigned long long* digits;
+
+	// helper function
+
+	// retrieves, in string form, digits at index 'digit'
+	std::string binDigit(const unsigned long long digit) const;
 
 	public:
 
@@ -45,8 +54,6 @@ class BigInteger {
 	void hexPrint() const;
 	// prints, starting at the first non-zero digit, the number in binary
 	void binPrint() const;
-	// retrieves, in string form, digits at index 'digit'
-	std::string binDigit(const unsigned long long digit) const;
 	// prints actual binary of number to file 'filename'
 	void binDump(const std::string filename) const;
 	// prints entire number in decimal
@@ -60,6 +67,7 @@ class BigInteger {
 	BigInteger sqrt() const;
 	// Power: this ^ exp
 	BigInteger pow(const BigInteger& exp) const;
+	BigInteger pow(const unsigned long long& exp) const;
 	// Factorialize
 	BigInteger fact() const;
 
@@ -82,6 +90,7 @@ class BigInteger {
 
 	// Assignment: deep copy //
 	BigInteger& operator=(const BigInteger& rhs);
+	BigInteger& operator=(const unsigned long long& rhs);
 	unsigned long long operator[](const unsigned long long& index) const;
 	unsigned long long& operator[](const unsigned long long& index);
 
@@ -100,15 +109,25 @@ class BigInteger {
 	// Bitwise //
 	BigInteger& operator&=(const BigInteger& rhs);
 	BigInteger operator&(const BigInteger& rhs) const;
+	BigInteger& operator&=(const unsigned long long& rhs);
+	BigInteger operator&(const unsigned long long& rhs) const;
+
 	BigInteger& operator^=(const BigInteger& rhs);
 	BigInteger operator^(const BigInteger& rhs) const;
+	BigInteger& operator^=(const unsigned long long& rhs);
+	BigInteger operator^(const unsigned long long& rhs) const;
+
 	BigInteger& operator|=(const BigInteger& rhs);
 	BigInteger operator|(const BigInteger& rhs) const;
+	BigInteger& operator|=(const unsigned long long& rhs);
+	BigInteger operator|(const unsigned long long& rhs) const;
+
 	BigInteger operator~() const;
-	BigInteger& operator<<=(unsigned long long shift);
-	BigInteger operator<<(unsigned long long shift) const;
-	BigInteger& operator>>=(unsigned long long shift);
-	BigInteger operator>>(unsigned long long shift) const;
+
+	BigInteger& operator<<=(const unsigned long long& shift);
+	BigInteger operator<<(const unsigned long long& shift) const;
+	BigInteger& operator>>=(const unsigned long long& shift);
+	BigInteger operator>>(const unsigned long long& shift) const;
 
 	// Unary //
 	BigInteger operator!() const;

@@ -1,5 +1,7 @@
 #include "../BigInteger.hpp"
 
+// AND
+
 BigInteger& BigInteger::operator&=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "&=: unequal sizes\n";
@@ -16,6 +18,19 @@ BigInteger BigInteger::operator&(const BigInteger& rhs) const {
 	ret &= rhs;
 	return ret;
 }
+
+BigInteger& BigInteger::operator&=(const unsigned long long& rhs) {
+	this->digits[0] &= rhs;
+	return *this;
+}
+
+BigInteger BigInteger::operator&(const unsigned long long& rhs) const {
+	BigInteger ret = BigInteger(*this);
+	ret &= rhs;
+	return ret;
+}
+
+// XOR
 
 BigInteger& BigInteger::operator^=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
@@ -34,6 +49,19 @@ BigInteger BigInteger::operator^(const BigInteger& rhs) const {
 	return ret;
 }
 
+BigInteger& BigInteger::operator^=(const unsigned long long& rhs) {
+	this->digits[0] ^= rhs;
+	return *this;
+}
+
+BigInteger BigInteger::operator^(const unsigned long long& rhs) const {
+	BigInteger ret = BigInteger(*this);
+	ret ^= rhs;
+	return ret;
+}
+
+// OR
+
 BigInteger& BigInteger::operator|=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "|=: unequal sizes\n";
@@ -51,6 +79,19 @@ BigInteger BigInteger::operator|(const BigInteger& rhs) const {
 	return ret;
 }
 
+BigInteger& BigInteger::operator|=(const unsigned long long& rhs) {
+	this->digits[0] |= rhs;
+	return *this;
+}
+
+BigInteger BigInteger::operator|(const unsigned long long& rhs) const {
+	BigInteger ret = BigInteger(*this);
+	ret |= rhs;
+	return ret;
+}
+
+// NOT
+
 BigInteger BigInteger::operator~() const {
 	BigInteger ret = BigInteger(*this);
 	unsigned long long index = this->size;
@@ -59,7 +100,9 @@ BigInteger BigInteger::operator~() const {
 	return ret;
 }
 
-BigInteger& BigInteger::operator<<=(unsigned long long shift) {
+// SHIFTS
+
+BigInteger& BigInteger::operator<<=(const unsigned long long& shift) {
 	unsigned long long completeShifts = shift >> 6;
 
 	// if shift > 64
@@ -109,13 +152,13 @@ BigInteger& BigInteger::operator<<=(unsigned long long shift) {
 	return *this;
 }
 
-BigInteger BigInteger::operator<<(unsigned long long shift) const {
+BigInteger BigInteger::operator<<(const unsigned long long& shift) const {
 	BigInteger ret = BigInteger(*this);
 	ret <<= shift;
 	return ret;
 }
 
-BigInteger& BigInteger::operator>>=(unsigned long long shift) {
+BigInteger& BigInteger::operator>>=(const unsigned long long& shift) {
 	unsigned long long completeShifts = shift >> 6;
 
 	// if shift > 64
@@ -166,7 +209,7 @@ BigInteger& BigInteger::operator>>=(unsigned long long shift) {
 	return *this;
 }
 
-BigInteger BigInteger::operator>>(unsigned long long shift) const {
+BigInteger BigInteger::operator>>(const unsigned long long& shift) const {
 	BigInteger ret = BigInteger(*this);
 	ret >>= shift;
 	return ret;

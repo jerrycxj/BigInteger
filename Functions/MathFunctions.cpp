@@ -63,6 +63,10 @@ BigInteger BigInteger::pow(const BigInteger& exp) const {
 	return acc;
 }
 
+BigInteger BigInteger::pow(const unsigned long long& exp) const {
+	return this->pow(BigInteger(exp,1));
+}
+
 BigInteger BigInteger::fact() const {
 	BigInteger ret = BigInteger(1,this->size);
 	if(this->N()) {
