@@ -95,39 +95,40 @@ class BigInteger {
 	unsigned long long& operator[](const unsigned long long& index);
 
 	// Binary //
-	BigInteger& operator+=(const BigInteger& rhs);
 	BigInteger operator+(const BigInteger& rhs) const;
-	BigInteger& operator-=(const BigInteger& rhs);
 	BigInteger operator-(const BigInteger& rhs) const;
-	BigInteger& operator*=(const BigInteger& rhs);
 	BigInteger operator*(const BigInteger& rhs) const;
-	BigInteger& operator/=(const BigInteger& rhs);
 	BigInteger operator/(const BigInteger& rhs) const;
-	BigInteger& operator%=(const BigInteger& rhs);
 	BigInteger operator%(const BigInteger& rhs) const;
 
+	// Binary Assignment //
+	BigInteger& operator+=(const BigInteger& rhs);
+	BigInteger& operator-=(const BigInteger& rhs);
+	BigInteger& operator*=(const BigInteger& rhs);
+	BigInteger& operator/=(const BigInteger& rhs);
+	BigInteger& operator%=(const BigInteger& rhs);
+
 	// Bitwise //
-	BigInteger& operator&=(const BigInteger& rhs);
-	BigInteger operator&(const BigInteger& rhs) const;
-	BigInteger& operator&=(const unsigned long long& rhs);
-	BigInteger operator&(const unsigned long long& rhs) const;
-
-	BigInteger& operator^=(const BigInteger& rhs);
-	BigInteger operator^(const BigInteger& rhs) const;
-	BigInteger& operator^=(const unsigned long long& rhs);
-	BigInteger operator^(const unsigned long long& rhs) const;
-
-	BigInteger& operator|=(const BigInteger& rhs);
-	BigInteger operator|(const BigInteger& rhs) const;
-	BigInteger& operator|=(const unsigned long long& rhs);
-	BigInteger operator|(const unsigned long long& rhs) const;
-
 	BigInteger operator~() const;
-
-	BigInteger& operator<<=(const unsigned long long& shift);
+	BigInteger operator&(const BigInteger& rhs) const;
+	BigInteger operator&(const unsigned long long& rhs) const;
+	BigInteger operator^(const BigInteger& rhs) const;
+	BigInteger operator^(const unsigned long long& rhs) const;
+	BigInteger operator|(const BigInteger& rhs) const;
+	BigInteger operator|(const unsigned long long& rhs) const;
 	BigInteger operator<<(const unsigned long long& shift) const;
-	BigInteger& operator>>=(const unsigned long long& shift);
 	BigInteger operator>>(const unsigned long long& shift) const;
+
+	// Bitwise Assignment //
+	BigInteger& operator&=(const BigInteger& rhs);
+	BigInteger& operator&=(const unsigned long long& rhs);
+	BigInteger& operator^=(const BigInteger& rhs);
+	BigInteger& operator^=(const unsigned long long& rhs);
+	BigInteger& operator|=(const BigInteger& rhs);
+	BigInteger& operator|=(const unsigned long long& rhs);
+	BigInteger& operator<<=(const unsigned long long& shift);
+	BigInteger& operator>>=(const unsigned long long& shift);
+
 
 	// Unary //
 	BigInteger operator!() const;
