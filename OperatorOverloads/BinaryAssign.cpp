@@ -1,4 +1,3 @@
-#include <iostream>
 #include "../BigInteger.hpp"
 
 BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
@@ -73,15 +72,16 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 	i = this->size;
 	while(i--) adder.digits[i + this->size] = this->digits[i];
 
-	for(unsigned long long i = this->size;i;--i) {
+	i = this->size;
+	while(i--) {
 		for(unsigned long long j = 64;j;--j) {
 			if(acc.digits[0] & 1) acc += adder;
 			acc >>= 1;
 		}
 	}
 
-	for(unsigned long long i = 0; i < this->size; ++i)
-		this->digits[i] = acc.digits[i];
+	i = this->size;
+	while(i--) this->digits[i] = acc.digits[i];
 
 	return *this;
 }
