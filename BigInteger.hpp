@@ -1,5 +1,5 @@
 #include <string>
-//#include <iostream>
+#include <iostream>
 
 #include "DynamicDecimal/DynamicDecimal.hpp"
 
@@ -51,13 +51,13 @@ class BigInteger {
 	// Print Functions //
 
 	// prints the entire number in hexadecimal
-	void hexPrint() const;
+	void hexPrint(std::ostream& os) const;
 	// prints, starting at the first non-zero digit, the number in binary
-	void binPrint() const;
+	void binPrint(std::ostream& os) const;
 	// prints actual binary of number to file 'filename'
 	void binDump(const std::string filename) const;
 	// prints entire number in decimal
-	void decPrint() const;
+	void decPrint(std::ostream& os) const;
 
 	// Math Functions //
 
@@ -168,5 +168,10 @@ class BigInteger {
 	bool N() const;
 	// Odd
 	bool O() const;
+
+	friend std::ostream& operator<<(std::ostream& os,const BigInteger& num) {
+		num.decPrint(os);
+		return os;
+	}
 
 };

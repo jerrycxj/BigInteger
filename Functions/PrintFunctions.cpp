@@ -1,9 +1,8 @@
-#include <iostream>
 #include <fstream>
 
 #include "../BigInteger.hpp"
 
-void BigInteger::hexPrint() const {
+void BigInteger::hexPrint(std::ostream& os) const {
 	unsigned long long mask = 0xF;
 	unsigned long long index = this->size;
 	unsigned long long temp = 0;
@@ -17,20 +16,20 @@ void BigInteger::hexPrint() const {
 			temp >>= i - 4;
 			temp += 48;
 			if(temp > 57) temp += 7;
-			std::cout << (char)(temp);
+			os << (char)(temp);
 			mask >>= 4;
 		}
-		std::cout << " ";
+		os << " ";
 	}
 }
 
-void BigInteger::binPrint() const {
+void BigInteger::binPrint(std::ostream& os) const {
 	unsigned long long index = size;
 	while(--index && digits[index] == 0) { }
 	++index;
 	while(index--) {
-		std::cout << binDigit(index);
-		std::cout << " ";
+		os << binDigit(index);
+		os << " ";
 	}
 }
 
@@ -70,7 +69,7 @@ void BigInteger::binDump(const std::string filename) const {
 	file.close();
 }
 
-void BigInteger::decPrint() const {
+void BigInteger::decPrint(std::ostream& os) const {
 	DynamicDecimal acc = DynamicDecimal(0);
 	unsigned long long mask = left;
 	unsigned long long index = this->size - 1;
@@ -93,6 +92,6 @@ void BigInteger::decPrint() const {
 		}
 	}
 
-	if(this->N()) std::cout << "-";
-	acc.print();
+	if(this->N()) os << "-";
+	acc.print(os);
 }
