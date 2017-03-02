@@ -14,7 +14,7 @@ public:
 
 	DecimalNode(unsigned long long newData);
 	void add(unsigned long long adder);
-	void print();
+	void print(std::ostream& os);
 
 };
 
@@ -35,6 +35,6 @@ public:
 	void multiplyByTwo();
 	void addOne();
 
-	void print();
+	void print(std::ostream& os);
 
 };

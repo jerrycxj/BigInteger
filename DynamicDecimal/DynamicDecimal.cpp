@@ -36,7 +36,7 @@ void DecimalNode::add(unsigned long long adder) {
 	}
 }
 
-void DecimalNode::print() {
+void DecimalNode::print(std::ostream& os) {
 	unsigned char zeros = 18;
 	unsigned long long dataCopy = this->data;
 
@@ -45,8 +45,8 @@ void DecimalNode::print() {
 		--zeros;
 	}
 	while(zeros--)
-		std::cout << "0";
-	std::cout << this->data;
+		os << "0";
+	os << this->data;
 }
 
 // DynamicDecimal //
@@ -99,18 +99,18 @@ void DynamicDecimal::addOne() {
 	onesDigit->add(1);
 }
 
-void DynamicDecimal::print() {
+void DynamicDecimal::print(std::ostream& os) {
 	updateLead();
 	DecimalNode* currNode = leadDigit;
 
 	while((!currNode->data) && currNode->right)
 		currNode = currNode->right;
 
-	std::cout << currNode->data;
+	os << currNode->data;
 	currNode = currNode->right;
 
 	while(currNode) {
-		currNode->print();
+		currNode->print(os);
 		currNode = currNode->right;
 	}
 }
