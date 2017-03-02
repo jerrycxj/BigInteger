@@ -23,8 +23,7 @@ int main(int argc, char* argv[]) {
 	cout << "\tdone.\n";
 
 	cout << "generating decimal...\n";
-	num3.decPrint();
-	cout << "\n";
+	cout << num3 << "\n";
 
 	return 0;
 }
