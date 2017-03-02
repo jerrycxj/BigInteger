@@ -77,6 +77,8 @@ class BigInteger {
 	void zero();
 	// Set to a random number
 	void rand();
+	// negate the number
+	void neg();
 	// Resizes the number to 'newSize' digits
 	// if digits < size
 		// the most significant digits will be cut off
@@ -96,17 +98,27 @@ class BigInteger {
 
 	// Binary //
 	BigInteger operator+(const BigInteger& rhs) const;
+	BigInteger operator+(const unsigned long long& rhs) const;
 	BigInteger operator-(const BigInteger& rhs) const;
+	BigInteger operator-(const unsigned long long& rhs) const;
 	BigInteger operator*(const BigInteger& rhs) const;
+	BigInteger operator*(const unsigned long long& rhs) const;
 	BigInteger operator/(const BigInteger& rhs) const;
+	BigInteger operator/(const unsigned long long& rhs) const;
 	BigInteger operator%(const BigInteger& rhs) const;
+	BigInteger operator%(const unsigned long long& rhs) const;
 
 	// Binary Assignment //
 	BigInteger& operator+=(const BigInteger& rhs);
+	BigInteger& operator+=(const unsigned long long& rhs);
 	BigInteger& operator-=(const BigInteger& rhs);
+	BigInteger& operator-=(const unsigned long long& rhs);
 	BigInteger& operator*=(const BigInteger& rhs);
+	BigInteger& operator*=(const unsigned long long& rhs);
 	BigInteger& operator/=(const BigInteger& rhs);
+	BigInteger& operator/=(const unsigned long long& rhs);
 	BigInteger& operator%=(const BigInteger& rhs);
+	BigInteger& operator%=(const unsigned long long& rhs);
 
 	// Bitwise //
 	BigInteger operator~() const;

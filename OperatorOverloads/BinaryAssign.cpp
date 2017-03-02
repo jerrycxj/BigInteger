@@ -1,5 +1,7 @@
 #include "../BigInteger.hpp"
 
+// ADDITION //
+
 BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "+: unequal sizes\n";
@@ -12,10 +14,9 @@ BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
 	}
 
 	unsigned long long index = 0;
-	unsigned long long overflow = 0;
 	unsigned long long originalDigit = 0;
+	unsigned char overflow = 0;
 	do {
-
 		originalDigit = this->digits[index];
 		this->digits[index] += overflow;
 		overflow = (this->digits[index] < originalDigit);
@@ -23,11 +24,25 @@ BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
 		originalDigit = this->digits[index];
 		this->digits[index] += rhs.digits[index];
 		overflow |= (this->digits[index] < originalDigit);
-
 	}while(++index < this->size);
 
 	return *this;
 }
+
+BigInteger& BigInteger::operator+=(const unsigned long long& rhs) {
+	unsigned long long index = 0;
+	unsigned long long originalDigit = 0;
+	unsigned long long overflow = rhs;
+	do {
+		originalDigit = this->digits[index];
+		this->digits[index] += overflow;
+		overflow = (this->digits[index] < originalDigit);
+	} while(overflow & (++index < this->size));
+
+	return *this;
+}
+
+// SUBTRACTION //
 
 BigInteger& BigInteger::operator-=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
@@ -37,6 +52,17 @@ BigInteger& BigInteger::operator-=(const BigInteger& rhs) {
 	*this += -rhs;
 	return *this;
 }
+
+BigInteger& BigInteger::operator-=(const unsigned long long& rhs) {
+
+	this->neg();
+	*this += rhs;
+	this->neg();
+
+	return *this;
+}
+
+// MULTIPLICATION //
 
 BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
@@ -85,6 +111,28 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 
 	return *this;
 }
+
+BigInteger& BigInteger::operator*=(const unsigned long long& rhs) {
+
+	unsigned long long rhsCopy = rhs;
+	BigInteger acc = BigInteger(this->size + 1);
+	BigInteger adder = BigInteger(this->size + 1);
+	unsigned long long i = this->size;
+	while(i--) adder[i + 1] = this->digits[i];
+
+	for(i = 64;i;--i) {
+		if(rhsCopy & 1) acc += adder;
+		rhsCopy >>= 1;
+		acc >>= 1;
+	}
+
+	i = this->size;
+	while(i--) this->digits[i] = acc[i];
+
+	return *this;
+}
+
+// DIVISION //
 
 BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
@@ -182,6 +230,38 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 	return *this;
 }
 
+BigInteger& BigInteger::operator/=(const unsigned long long& rhs) {
+	BigInteger DEND = BigInteger(this->size + 1);
+	BigInteger OGDEND = BigInteger(*this);
+
+	bool negAns = this->N();
+
+	if(negAns) this->neg();
+
+	unsigned long long i = this->size;
+	while(i--) DEND.digits[i] = this->digits[i];
+
+	this->zero();
+
+	for(i = this->size;i;--i) {
+		for(unsigned char j = 64;j;--j) {
+			if(DEND.digits[this->size] >= rhs) {
+				*this ^= 1;
+				DEND.digits[this->size] -= rhs;
+			}
+			DEND <<= 1;
+			*this <<= 1;
+		}
+	}
+
+	if((*this * rhs) > OGDEND) ++(*this);
+	if(negAns) this->neg();
+
+	return *this;
+}
+
+// MODULUS //
+
 BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 	if(this->size != rhs.size) {
 		//std::cout << "%: unequal sizes\n";
@@ -213,5 +293,15 @@ BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 
 	*this -= quotient;
 
+	return *this;
+}
+
+BigInteger& BigInteger::operator%=(const unsigned long long& rhs) {
+	BigInteger quotient = BigInteger(*this);
+
+	quotient /= rhs;
+	quotient *= rhs;
+
+	*this -= quotient;
 	return *this;
 }
