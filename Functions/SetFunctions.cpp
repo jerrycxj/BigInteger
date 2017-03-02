@@ -23,6 +23,12 @@ void BigInteger::rand() {
 	}
 }
 
+void BigInteger::neg() {
+	unsigned long long index = size;
+	while(index--) this->digits[index] = ~(this->digits[index]);
+	++(*this);
+}
+
 void BigInteger::resize(unsigned long long newSize) {
 	if(newSize == size) return;
 	unsigned long long* newArray = new unsigned long long[newSize];
