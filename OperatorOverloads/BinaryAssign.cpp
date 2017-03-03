@@ -211,7 +211,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 			for(unsigned char k = 64;k;--k)
 				DENDS >>= this->size;
 			if(DENDS >= SOR) {
-				QUO ^= one;
+				QUO ^= 1;
 				DEND -= SORS;
 			}
 			DEND <<= 1;
@@ -221,7 +221,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 
 	DEND = QUO;
 	DEND *= SOR;
-	if(DEND > OGDEND) ++QUO;
+	if(DEND < OGDEND) ++QUO;
 	if(negAns) QUO = -QUO;
 
 	for(unsigned long long i = 0;i < this->size;++i)
@@ -254,7 +254,7 @@ BigInteger& BigInteger::operator/=(const unsigned long long& rhs) {
 		}
 	}
 
-	if((*this * rhs) > OGDEND) ++(*this);
+	if((*this * rhs) < OGDEND) ++(*this);
 	if(negAns) this->neg();
 
 	return *this;
