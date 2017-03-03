@@ -70,10 +70,12 @@ void BigInteger::binDump(const std::string filename) const {
 }
 
 void BigInteger::decPrint(std::ostream& os) const {
+	BigInteger thisCopy = BigInteger(*this);
+	if(thisCopy.N()) thisCopy.neg();
 	DynamicDecimal acc = DynamicDecimal(0);
 	unsigned long long mask = left;
-	unsigned long long index = this->size - 1;
-	unsigned long long currDigit = this->digits[index];
+	unsigned long long index = thisCopy.size - 1;
+	unsigned long long currDigit = thisCopy.digits[index];
 
 	mask >>= 1;
 	while(mask) {
@@ -83,7 +85,7 @@ void BigInteger::decPrint(std::ostream& os) const {
 	}
 
 	while(index--) {
-		currDigit = this->digits[index];
+		currDigit = thisCopy.digits[index];
 		mask = left;
 		while(mask) {
 			acc.multiplyByTwo();
