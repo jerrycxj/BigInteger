@@ -1,43 +1,43 @@
 #include "../BigInteger.hpp"
 
-BigInteger BigInteger::abs() const {
-	return (N() ? -(*this) : *this);
+BigInteger abs(const BigInteger& num) {
+	return (num.N() ? -(num) : BigInteger(num));
 }
 
-BigInteger BigInteger::sqrt() const {
-	if(this->Z()) return *this;
-	if(this->N()) {
+BigInteger sqrt(const BigInteger& num) {
+	if(num.Z()) return num;
+	if(num.N()) {
 		//std::cout << "sqrt: negative radicand\n";
-		return *this;
+		return num;
 	}
 
-	BigInteger one = BigInteger(1,this->size);
-	if(*this == one) return one;
+	BigInteger one = BigInteger(1,num.size);
+	if(num == one) return one;
 
-	BigInteger ret = BigInteger(*this);
+	BigInteger ret = BigInteger(num);
 
-	for(unsigned long long i = this->size;i;--i)
+	for(unsigned long long i = num.size;i;--i)
 		ret >>= 32;
 
 	if(ret.Z()) ret = one + one;
 
-	for(unsigned long long i = this->size;i;--i) {
+	for(unsigned long long i = num.size;i;--i) {
 		for(unsigned char j = 128;j;--j) {
-			ret += *this / ret;
+			ret += num / ret;
 			ret >>= 1;
 		}
 	}
 	one = ret;
 	one *= ret;
-	if(one > *this) --ret;
+	if(one > num) --ret;
 	return ret;
 }
 
-BigInteger BigInteger::pow(const BigInteger& exp) const {
-	BigInteger acc = BigInteger(1,this->size);
+BigInteger pow(const BigInteger& num, const BigInteger& exp) {
+	BigInteger acc = BigInteger(1,num.size);
 
-	bool thisZ = this->Z();
-	bool expZ = this->Z();
+	bool thisZ = num.Z();
+	bool expZ = num.Z();
 	if(thisZ & expZ) {
 		//std::cout << "pow: 0 ^ 0\n";
 		return acc;
@@ -51,31 +51,31 @@ BigInteger BigInteger::pow(const BigInteger& exp) const {
 
 
 	BigInteger expCopy = BigInteger(exp);
-	BigInteger thisCopy = BigInteger(*this);
+	BigInteger numCopy = BigInteger(num);
 	while(!expCopy.Z()) {
 		while(!expCopy.O()) {
-			thisCopy *= thisCopy;
+			numCopy *= numCopy;
 			expCopy >>= 1;
 		}
-		acc *= thisCopy;
+		acc *= numCopy;
 		--expCopy;
 	}
 	return acc;
 }
 
-BigInteger BigInteger::pow(const unsigned long long& exp) const {
-	return this->pow(BigInteger(exp,1));
+BigInteger pow(const BigInteger& num, const unsigned long long& exp) {
+	return pow(num, BigInteger(exp,1));
 }
 
-BigInteger BigInteger::fact() const {
-	BigInteger ret = BigInteger(1,this->size);
-	if(this->N()) {
+BigInteger fact(const BigInteger& num) {
+	BigInteger ret = BigInteger(1,num.size);
+	if(num.N()) {
 		//std::cout << "fact: negative number\n";
 		return ret;
 	}
-	if(this->Z() || *this == ret) return ret;
+	if(num.Z() || num == ret) return ret;
 
-	BigInteger copy = BigInteger(*this);
+	BigInteger copy = BigInteger(num);
 
 	do {
 		ret *= copy;

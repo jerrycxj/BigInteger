@@ -13,16 +13,16 @@ Class for arbitrarily large number arithmetic
 
 class BigInteger {
 
-	private:
+private:
 
 	// constants used mainly for bit masking //
 
 	// 32 bits of 1
-	const unsigned long long half = 0b11111111111111111111111111111111;
+	static constexpr unsigned long long half = 0b11111111111111111111111111111111;
 	// 64 bits of 1
-	const unsigned long long full = 0b1111111111111111111111111111111111111111111111111111111111111111;
+	static constexpr unsigned long long full = 0b1111111111111111111111111111111111111111111111111111111111111111;
 	// 1 at 64th (index 63) (leftmost) bit
-	const unsigned long long left = 0b1000000000000000000000000000000000000000000000000000000000000000;
+	static constexpr unsigned long long left = 0b1000000000000000000000000000000000000000000000000000000000000000;
 
 	// data
 
@@ -36,7 +36,7 @@ class BigInteger {
 	// retrieves, in string form, digits at index 'digit'
 	std::string binDigit(const unsigned long long digit) const;
 
-	public:
+public:
 
 	// Constructors //
 
@@ -62,14 +62,14 @@ class BigInteger {
 	// Math Functions //
 
 	// Absolute Value
-	BigInteger abs() const;
+	friend BigInteger abs(const BigInteger& num);
 	// Square Root
-	BigInteger sqrt() const;
+	friend BigInteger sqrt(const BigInteger& num);
 	// Power: this ^ exp
-	BigInteger pow(const BigInteger& exp) const;
-	BigInteger pow(const unsigned long long& exp) const;
+	friend BigInteger pow(const BigInteger& num, const BigInteger& exp);
+	friend BigInteger pow(const BigInteger& num, const unsigned long long& exp);
 	// Factorialize
-	BigInteger fact() const;
+	friend BigInteger fact(const BigInteger& num);
 
 	// SetFunctions //
 
