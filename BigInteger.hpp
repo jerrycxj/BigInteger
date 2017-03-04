@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <random>
 
 #include "DynamicDecimal/DynamicDecimal.hpp"
 
@@ -65,7 +66,7 @@ public:
 	friend BigInteger abs(const BigInteger& num);
 	// Square Root
 	friend BigInteger sqrt(const BigInteger& num);
-	// Power: this ^ exp
+	// Power: num ^ exp
 	friend BigInteger pow(const BigInteger& num, const BigInteger& exp);
 	friend BigInteger pow(const BigInteger& num, const unsigned long long& exp);
 	// Factorialize

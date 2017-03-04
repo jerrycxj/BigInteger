@@ -1,6 +1,3 @@
-#include <cstdlib>
-#include <ctime>
-
 #include "../BigInteger.hpp"
 
 void BigInteger::zero() {
@@ -9,17 +6,20 @@ void BigInteger::zero() {
 }
 
 void BigInteger::rand() {
-	std::srand(std::time(0));
 	unsigned long long index = size;
-	unsigned long long shifted = 0;
 	unsigned long long temp = 0;
-	while(index) {
-		temp = (unsigned long long) std::rand() << 32;
-		temp += std::rand();
-		shifted = (unsigned long long)std::rand() << 32;
-		digits[--index] = shifted;
-		digits[index] += std::rand();
-		digits[index] += temp;
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(1,0xFFFF);
+
+	while(index--) {
+		digits[index] = 0;
+		for(unsigned char j = 0;j < 4;++j) {
+			temp = dis(gen);
+			temp <<= (j << 4);
+			digits[index] |= temp;
+		}
 	}
 }
 
