@@ -81,53 +81,37 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 		return *this;
 	}
 
-	if(this->size > (full >> 1)) {
-		//std::cout << "*: numbers too big\n";
-		return *this;
-	}
+	BigInteger acc = BigInteger(this->size);
 
-	const unsigned long long doubleSize = (this->size << 1);
-
-	BigInteger acc = BigInteger(doubleSize);
-
-	unsigned long long i = this->size;
-	while(i--) acc.digits[i] = rhs.digits[i];
-
-
-	BigInteger adder = BigInteger(doubleSize);
-	i = this->size;
-	while(i--) adder.digits[i + this->size] = this->digits[i];
-
-	i = this->size;
-	while(i--) {
+	for(unsigned long long i = this->size;i;--i) {
 		for(unsigned long long j = 64;j;--j) {
-			if(acc.digits[0] & 1) acc += adder;
+
+			if(this->digits[0] & 1) acc += rhs;
+			*this >>= 1;
+			if(acc.digits[0] & 1)
+				this->digits[this->size - 1] |= left;
 			acc >>= 1;
+
 		}
 	}
-
-	i = this->size;
-	while(i--) this->digits[i] = acc.digits[i];
 
 	return *this;
 }
 
 BigInteger& BigInteger::operator*=(const unsigned long long& rhs) {
 
-	unsigned long long rhsCopy = rhs;
-	BigInteger acc = BigInteger(this->size + 1);
-	BigInteger adder = BigInteger(this->size + 1);
-	unsigned long long i = this->size;
-	while(i--) adder[i + 1] = this->digits[i];
+	unsigned long long acc = 0;
+	for(unsigned long long i = this->size;i;--i) {
+		for(unsigned long long j = 64;j;--j) {
 
-	for(i = 64;i;--i) {
-		if(rhsCopy & 1) acc += adder;
-		rhsCopy >>= 1;
-		acc >>= 1;
+			if(this->digits[0] & 1) acc += rhs;
+			*this >>= 1;
+			if(acc & 1)
+				this->digits[this->size - 1] |= left;
+			acc >>= 1;
+
+		}
 	}
-
-	i = this->size;
-	while(i--) this->digits[i] = acc[i];
 
 	return *this;
 }
@@ -145,11 +129,6 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 		return *this;
 	}
 
-	if(this->size > (full >> 1)) {
-		//std::cout << "/: numbers too big\n";
-		return *this;
-	}
-
 	// if either number is zero, return zero
 
 	if(rhs.Z()) {
@@ -157,110 +136,70 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 		this->zero();
 		return *this;
 	}
+
 	if(this->Z()) return *this;
 
-	if(*this <= rhs) {
-		if(*this < rhs) {
-			this->zero();
-			return *this;
-		}
-		if(*this == rhs) {
-			this->zero();
-			this->digits[0] = 1;
-			return *this;
-		}
-	}
+	BigInteger acc = BigInteger(this->size);
+	BigInteger sor = BigInteger(rhs);
 
+	bool thisNegative = this->N();
+	bool rhsNegative = rhs.N();
 
-	unsigned long long doubleThisSize = this->size << 1;
+	bool negAns = (thisNegative ^ rhsNegative);
 
-	BigInteger DEND = BigInteger(doubleThisSize);
-	// DENDS is DEND shifted right this->size
-	BigInteger DENDS = BigInteger(doubleThisSize);
+	if(thisNegative) this->neg();
+	if(rhsNegative) sor.neg();
 
-	BigInteger SOR = BigInteger(doubleThisSize);
-	// SORS is SOR shifted left this->size
-	BigInteger SORS = BigInteger(doubleThisSize);
+	BigInteger negSor = BigInteger(sor);
+	negSor.neg();
 
-	BigInteger QUO = BigInteger(doubleThisSize);
-
-	BigInteger tempThisABS = BigInteger(this->abs());
-	BigInteger tempRhsABS = BigInteger(rhs.abs());
-
-
-	// Set the Dividend and Divisor
-
-	bool negAns = (this->N() ^ rhs.N());
-
-	for(unsigned long long i = 0;i < this->size;++i) {
-		DEND.digits[i] = tempThisABS.digits[i];
-		SOR.digits[i] = tempRhsABS.digits[i];
-	}
-
-	BigInteger OGDEND = BigInteger(DEND);
-
-	SORS = SOR;
-	for(unsigned char i = 64;i;--i)
-		SORS <<= this->size;
-
-	BigInteger one = BigInteger(1,doubleThisSize);
-
+	bool negative = false;
 	for(unsigned long long i = this->size;i;--i) {
-		for(unsigned char j = 64;j;--j) {
-			DENDS = DEND;
-			for(unsigned char k = 64;k;--k)
-				DENDS >>= this->size;
-			if(DENDS >= SOR) {
-				QUO ^= 1;
-				DEND -= SORS;
-			}
-			DEND <<= 1;
-			QUO <<= 1;
+		for(unsigned long long j = 64;j;--j) {
+
+			negative = acc.N();
+			acc <<= 1;
+			if(this->N()) acc.digits[0] |= 1;
+			*this <<= 1;
+			acc += (negative ? sor : negSor);
+			this->digits[0] |= !acc.N();
+
 		}
 	}
 
-	DEND = QUO;
-	DEND *= SOR;
-	if(DEND < OGDEND) ++QUO;
-
-	DEND = QUO;
-	DEND *= SOR;
-	if(DEND > OGDEND) --QUO;
-
-	if(negAns) QUO = -QUO;
-
-	for(unsigned long long i = 0;i < this->size;++i)
-		this->digits[i] = QUO.digits[i];
+	if(negAns) this->neg();
 
 	return *this;
 }
 
 BigInteger& BigInteger::operator/=(const unsigned long long& rhs) {
-	BigInteger DEND = BigInteger(this->size + 1);
-	BigInteger OGDEND = BigInteger(*this);
+
+	if(rhs == 0) {
+		this->zero();
+		return *this;
+	}
+	if(this->Z()) return *this;
 
 	bool negAns = this->N();
-
 	if(negAns) this->neg();
 
-	unsigned long long i = this->size;
-	while(i--) DEND.digits[i] = this->digits[i];
+	unsigned long long acc = 0;
+	unsigned long long negRHS = ~rhs;
+	++negRHS;
+	bool negative = false;
+	for(unsigned long long i = this->size;i;--i) {
+		for(unsigned long long j = 64;j;--j) {
 
-	this->zero();
-
-	for(i = this->size;i;--i) {
-		for(unsigned char j = 64;j;--j) {
-			if(DEND.digits[this->size] >= rhs) {
-				*this ^= 1;
-				DEND.digits[this->size] -= rhs;
-			}
-			DEND <<= 1;
+			negative = (acc & left);
+			acc <<= 1;
+			if(this->N()) acc |= 1;
 			*this <<= 1;
+			acc += (negative ? rhs : negRHS);
+			this->digits[0] |= !(acc & left);
+
 		}
 	}
 
-	if((*this * rhs) < OGDEND) ++(*this);
-	if((*this * rhs) > OGDEND) --(*this);
 	if(negAns) this->neg();
 
 	return *this;
@@ -281,33 +220,73 @@ BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 
 	// obvious cases
 
-	if(*this <= rhs) {
-		if(*this < rhs)
+	if(this->Z()) return *this;
+
+	BigInteger acc = BigInteger(this->size);
+	BigInteger sor = BigInteger(rhs);
+
+	if(this->N()) this->neg();
+	if(rhs.N()) sor.neg();
+
+	if(*this <= sor) {
+		if(*this < sor)
 			return *this;
-		if(*this == rhs) {
+		if(*this == sor) {
 			this->zero();
 			return *this;
 		}
 	}
 
-	// slow mod
+	BigInteger negSor = BigInteger(sor);
+	negSor.neg();
 
-	BigInteger quotient = BigInteger(this->size);
-	quotient = *this / rhs;
+	bool negative = false;
+	for(unsigned long long i = this->size;i;--i) {
+		for(unsigned long long j = 64;j;--j) {
 
-	quotient *= rhs;
+			negative = acc.N();
+			acc <<= 1;
+			if(this->N()) acc.digits[0] |= 1;
+			*this <<= 1;
+			acc += (negative ? sor : negSor);
+			this->digits[0] |= !acc.N();
 
-	*this -= quotient;
+		}
+	}
+
+	if(acc.N()) acc += sor;
+
+	*this = acc;
 
 	return *this;
 }
 
 BigInteger& BigInteger::operator%=(const unsigned long long& rhs) {
-	BigInteger quotient = BigInteger(*this);
 
-	quotient /= rhs;
-	quotient *= rhs;
+	if(this->N()) this->neg();
+	if(this->Z()) return *this;
 
-	*this -= quotient;
+	unsigned long long acc = 0;
+	unsigned long long negRHS = ~rhs;
+	++negRHS;
+	bool negative = false;
+	for(unsigned long long i = this->size;i;--i) {
+		for(unsigned long long j = 64;j;--j) {
+
+			negative = (acc & left);
+			acc <<= 1;
+			if(this->N()) acc |= 1;
+			*this <<= 1;
+			acc += (negative ? rhs : negRHS);
+			this->digits[0] |= !(acc & left);
+
+		}
+	}
+
+	if(acc & left) acc += rhs;
+
+	this->zero();
+	this->digits[0] = acc;
+
 	return *this;
 }
