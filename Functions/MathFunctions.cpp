@@ -16,13 +16,36 @@ BigInteger sqrt(const BigInteger& num) {
 
 	BigInteger ret = BigInteger(num);
 
-	for(unsigned long long i = num.size;i;--i)
-		ret >>= 32;
+	unsigned long long digitsIn = num.size - 1;
+	unsigned long long insideBits = 64;
+	unsigned long long mask = num.left;
 
-	if(ret.Z()) ret = one + one;
+	while(!(mask & num.digits[digitsIn])) {
+		--insideBits;
+		mask >>= 1;
+		if(!mask) {
+			--digitsIn;
+			insideBits = 64;
+			mask = num.left;
+		}
+	}
+
+	digitsIn >>= 1;
+	while(digitsIn--) {
+		ret >>= 64;
+	}
+
+	if(num.size & 1) {
+		insideBits >>= 1;
+	}
+	else {
+		insideBits = 64 - insideBits;
+	}
+
+	ret >>= insideBits;
 
 	for(unsigned long long i = num.size;i;--i) {
-		for(unsigned char j = 128;j;--j) {
+		for(unsigned char j = 32;j;--j) {
 			ret += num / ret;
 			ret >>= 1;
 		}
