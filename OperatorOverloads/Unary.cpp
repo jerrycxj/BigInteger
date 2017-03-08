@@ -6,21 +6,18 @@ BigInteger BigInteger::operator!() const {
 }
 BigInteger BigInteger::operator-() const {
 	BigInteger copy = BigInteger(*this);
-	copy = ~copy;
-	++copy;
+	copy.neg();
 	return copy;
 }
 
 // Prefix
 BigInteger& BigInteger::operator++() {
-	BigInteger one = BigInteger(1,this->size);
-	*this += one;
+	*this += 1;
 	return *this;
 }
 
 BigInteger& BigInteger::operator--() {
-	BigInteger one = BigInteger(1,this->size);
-	*this -= one;
+	*this -= 1;
 	return *this;
 }
 
