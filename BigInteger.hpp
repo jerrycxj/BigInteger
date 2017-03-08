@@ -30,6 +30,7 @@ private:
 	// number of digits in the number
 	unsigned long long size;
 	// array of digits in the number
+	// endianness: little
 	unsigned long long* digits;
 
 	// helper function

@@ -11,8 +11,8 @@ BigInteger sqrt(const BigInteger& num) {
 		return num;
 	}
 
-	BigInteger one = BigInteger(1,num.size);
-	if(num == one) return one;
+	BigInteger temp = BigInteger(1,num.size);
+	if(num == temp) return temp;
 
 	BigInteger ret = BigInteger(num);
 
@@ -45,14 +45,16 @@ BigInteger sqrt(const BigInteger& num) {
 	ret >>= insideBits;
 
 	for(unsigned long long i = num.size;i;--i) {
-		for(unsigned char j = 32;j;--j) {
-			ret += num / ret;
+		for(unsigned char j = 2;j;--j) {
+			temp = num;
+			temp /= ret;
+			ret += temp;
 			ret >>= 1;
 		}
 	}
-	one = ret;
-	one *= ret;
-	if(one > num) --ret;
+	temp = ret;
+	temp *= ret;
+	if(temp > num) --ret;
 	return ret;
 }
 
