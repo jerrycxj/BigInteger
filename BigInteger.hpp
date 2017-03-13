@@ -72,6 +72,11 @@ public:
 	friend BigInteger pow(const BigInteger& num, const unsigned long long& exp);
 	// Factorialize
 	friend BigInteger fact(const BigInteger& num);
+	// checks if num1 is divisible by num2
+	//	returns [(num1 % num2) == 0]
+	friend bool divisible(const BigInteger& num1, const BigInteger& num2);
+	// Greatest Common Denominator
+	friend BigInteger gcd(const BigInteger& num1, const BigInteger& num2);
 
 	// SetFunctions //
 

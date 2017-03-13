@@ -109,3 +109,26 @@ BigInteger fact(const BigInteger& num) {
 
 	return ret;
 }
+
+bool divisible(const BigInteger& num1, const BigInteger& num2) {
+	return (num1 % num2).Z();
+}
+
+BigInteger gcd(const BigInteger& num1, const BigInteger& num2) {
+	BigInteger mod = BigInteger(1,num1.size);
+	BigInteger a = BigInteger(num1);
+	BigInteger b = BigInteger(num2);
+
+	mod = a;
+	mod %= b;
+
+	while(!mod.Z()) {
+		a = b;
+		b = mod;
+		mod = a;
+		mod %= b;
+	}
+
+	return b;
+
+}
