@@ -19,8 +19,8 @@ bool mersennePrime(const unsigned long long n, std::ostream& os) {
 	unsigned long long iover = nm2 / every;
 	for(unsigned long long j = nm2;j;--j) {
 		if(j % every == 0) {
-			std::cout << "\t"  << ((nm2 - j + 1)/every) + 1;
-			std::cout << "/" << iover << std::endl;
+			std::cout << "\r\t"  << ((nm2 - j + 1)/every) + 1;
+			std::cout << "/" << iover << std::flush;
 		}
 		temp = seq;
 		seq *= temp;
