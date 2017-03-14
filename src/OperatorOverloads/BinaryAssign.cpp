@@ -88,8 +88,7 @@ BigInteger& BigInteger::operator*=(const BigInteger& rhs) {
 
 			if(this->digits[0] & 1) acc += rhs;
 			*this >>= 1;
-			if(acc.digits[0] & 1)
-				this->digits[this->size - 1] |= left;
+			this->digits[this->size - 1] |= ((acc.digits[0] & 1) << 63);
 			acc >>= 1;
 
 		}
@@ -106,8 +105,7 @@ BigInteger& BigInteger::operator*=(const unsigned long long& rhs) {
 
 			if(this->digits[0] & 1) acc += rhs;
 			*this >>= 1;
-			if(acc & 1)
-				this->digits[this->size - 1] |= left;
+			this->digits[this->size - 1] |= ((acc & 1) << 63);
 			acc >>= 1;
 
 		}
