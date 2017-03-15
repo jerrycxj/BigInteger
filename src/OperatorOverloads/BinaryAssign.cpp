@@ -157,7 +157,7 @@ BigInteger& BigInteger::operator/=(const BigInteger& rhs) {
 
 			negative = acc.N();
 			acc <<= 1;
-			if(this->N()) acc.digits[0] |= 1;
+			acc.digits[0] |= (this->N() & 1);
 			*this <<= 1;
 			acc += (negative ? sor : negSor);
 			this->digits[0] |= !acc.N();
@@ -190,7 +190,7 @@ BigInteger& BigInteger::operator/=(const unsigned long long& rhs) {
 
 			negative = (acc & left);
 			acc <<= 1;
-			if(this->N()) acc |= 1;
+			acc |= (this->N() & 1);
 			*this <<= 1;
 			acc += (negative ? rhs : negRHS);
 			this->digits[0] |= !(acc & left);
@@ -244,7 +244,7 @@ BigInteger& BigInteger::operator%=(const BigInteger& rhs) {
 
 			negative = acc.N();
 			acc <<= 1;
-			if(this->N()) acc.digits[0] |= 1;
+			acc.digits[0] |= (this->N() & 1);
 			*this <<= 1;
 			acc += (negative ? sor : negSor);
 			this->digits[0] |= !acc.N();
@@ -273,7 +273,7 @@ BigInteger& BigInteger::operator%=(const unsigned long long& rhs) {
 
 			negative = (acc & left);
 			acc <<= 1;
-			if(this->N()) acc |= 1;
+			acc |= (this->N() & 1);
 			*this <<= 1;
 			acc += (negative ? rhs : negRHS);
 			this->digits[0] |= !(acc & left);
