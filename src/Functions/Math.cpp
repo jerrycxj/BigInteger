@@ -30,16 +30,16 @@ BigInteger sqrt(const BigInteger& num) {
 		}
 	}
 
+	if(digitsIn & 1) {
+		insideBits = 64 - insideBits;
+	}
+	else {
+		insideBits >>= 1;
+	}
+
 	digitsIn >>= 1;
 	while(digitsIn--) {
 		ret >>= 64;
-	}
-
-	if(num.size & 1) {
-		insideBits >>= 1;
-	}
-	else {
-		insideBits = 64 - insideBits;
 	}
 
 	ret >>= insideBits;
