@@ -14,7 +14,7 @@ BigInteger& BigInteger::operator&=(const BigInteger& rhs) {
 }
 
 BigInteger& BigInteger::operator&=(const unsigned long long& rhs) {
-	unsigned long long index = rhs.size;
+	unsigned long long index = this->size;
 	while(--index) this->digits[index] = 0;
 	this->digits[0] &= rhs;
 	return *this;
