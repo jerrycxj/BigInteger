@@ -132,3 +132,21 @@ BigInteger gcd(const BigInteger& num1, const BigInteger& num2) {
 	return b;
 
 }
+
+BigInteger log(const BigInteger& num) {
+
+	BigInteger ret = BigInteger(num.size);
+	BigInteger counter = BigInteger(num.size);
+
+	unsigned long long index = 0;
+	unsigned long long mask = 1;
+
+	do {
+		for(mask = 1; mask; mask <<= 1) {
+			if(mask & num.digits[index]) ret = counter;
+			++counter;
+		}
+	} while(++index < num.size);
+
+	return ret;
+}

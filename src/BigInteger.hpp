@@ -77,6 +77,8 @@ public:
 	friend bool divisible(const BigInteger& num1, const BigInteger& num2);
 	// Greatest Common Denominator
 	friend BigInteger gcd(const BigInteger& num1, const BigInteger& num2);
+	// Log base 2
+	friend BigInteger log(const BigInteger& num);
 
 	// SetFunctions //
 
