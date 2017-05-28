@@ -1,3 +1,6 @@
+#ifndef BIGINTEGER_H
+#define BIGINTEGER_H
+
 #include <string>
 #include <iostream>
 #include <random>
@@ -190,3 +193,5 @@ public:
 // os is where it will print the number if it is prime
 // prints to std::cout the progress of it checking
 bool mersennePrime(const unsigned long long n, std::ostream& os);
+
+#endif
